@@ -1,0 +1,76 @@
+#Part-C
+
+# Question 1: Write a shell script that prints "Hello, World!" to the terminal.
+#echo "Hellow, World!"
+
+
+#Question 2: Declare a variable named "name" and assign the value "CDAC Mumbai" to it. Print the
+#value of the variable.
+#name="CDAC Mumbai"
+#echo $name
+
+
+#Question 3: Write a shell script that takes a number as input from the user and prints it.
+#echo "Enter a Number n"
+#read n
+#echo "The Enter number is: $n"
+
+
+#Question 4: Write a shell script that performs addition of two numbers (e.g., 5 and 3) and prints the
+#result.
+#x=10
+#y=20
+#r=`expr $x + $y`
+#echo $r
+
+#Question 5: Write a shell script that takes a number as input and prints "Even" if it is even, otherwise
+#prints "Odd".
+#echo "Enter Number"
+#read n
+#echo $n
+
+
+
+#Question 6: Write a shell script that uses a for loop to print numbers from 1 to 5.
+#for a in 1 2 3 4 5
+#do
+#echo $a
+#done
+
+#or
+
+#for a in {1..5}
+#do
+#echo $a
+#done
+
+#Question 7: Write a shell script that uses a while loop to print numbers from 1 to 5.
+#a=1
+#while [ $a -le 5 ]
+#do
+#echo $a
+#a=`expr $a + 1`
+#done
+
+#Question 8: Write a shell script that checks if a file named "file.txt" exists in the current directory. If it
+#does, print "File exists", otherwise, print "File does not exist".
+#if [ -e "file.txt" ]
+#then
+#       echo "File exists"
+#else
+#       echo "File Does not Exitst"
+#fi
+
+
+#Question 9: Write a shell script that uses the if statement to check if a number is greater than 10 and
+#prints a message accordingly.
+#echo "Enter Number a"
+#read a
+#a=5
+#if [ $a -gt 10 ]
+#then
+#       echo "Number is greater than 10"
+#else
+#       echo "Number is not greater than 10"
+#fi
+
