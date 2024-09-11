@@ -1,33 +1,49 @@
-package assignment.sandeepSir;
-
+package assignments.sandeepSir;
 import java.util.Scanner;
 
 public class Calculator {
-
-	public static void main(String[] args) {
+	
+		double principalAmount;
+		double annualInterestRate;
+		double loanTerm;
 		
-		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("Enter Height: ");
-		float height = sc.nextFloat();
+		Scanner sc = new Scanner(System.in);  	//accepting i/p
 		
-		System.out.println("Enter Weight: ");
-		float weight = sc.nextFloat();
-		
-//		Frmula
-		float BMI = weight/(height*height);
-		
-		System.out.println("BMI is: "+BMI);
-		
-//		Category
-		if(BMI < 18) {
-			System.out.println("Person is Underwight.");
-		}else if (BMI>=18 && BMI < 24.9) {
-			System.out.println("The weight of the person is normal.");
-		}else {
-			System.out.println("Person is Overweight.");
+		public void acceptRecord(){
+		System.out.print("Enter the annual principal amount: ");
+		principalAmount  = sc.nextInt();    //also known as loan amount 
+		System.out.print("Enter the Annual Interest Rate: ");
+		annualInterestRate = sc.nextInt();
+		System.out.print("Enter Loan Term: ");
+		loanTerm = sc.nextInt(); //in years 
+		sc.close();
 		}
 		
-	}
-
+		public double calculate(){
+		double monthlyInterestRate = annualInterestRate / 12 / 100;
+		double numberOfMonths = loanTerm * 12;
+		return (principalAmount * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfMonths)) / 
+                (Math.pow(1 + monthlyInterestRate, numberOfMonths) - 1));
+		}
+		
+		public void printRecord(){
+			Double monthlyPayment = calculate();
+			double totalAmountSpent = monthlyPayment * loanTerm * 12;
+			System.out.println("Monthly Payment: "+monthlyPayment);
+			System.out.println("Total amount paid: "+totalAmountSpent);
+		}
+		
+		public static void main(String[] args) {
+			Calculator s = new Calculator();
+			s.acceptRecord();
+			s.printRecord();
+		}
+		
 }
+
+
+
+
+
+
