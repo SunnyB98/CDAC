@@ -1,0 +1,64 @@
+--SQL--Exercise -2 -------------------------------------
+
+
+1. Display the Supplier table in the descending order of CITY.   
+mysql> select * from supplier order by city desc;
+
+2.Display the Part Table in the ascending order of CITY and within the city in the ascending order of Part names.   
+
+mysql> select * from parts order by pcity asc, pname asc;
+
+
+This query will return the entire Parts table sorted first by City and then by Partname within each city.
+
+
+3. Display all the Suppliers with a status between 10 and 20.   
+mysql> select * from supplier where status between 10 and 20;
+Or
+mysql> select * from supplier where status in(10,20);
+Or
+mysql> select * from supplier where status=10 or status=20;
+Or
+mysql> select * from supplier group by status, city, sname, `S#` having status between 10 and 20;
+to use this group by we have to type all columns name if table;
+
+4. Display all the Parts and their Weight, which are not in the range of 10 and 15.   
+
+mysql> select pname , pweight from parts where pweight not between 10 and 20;
+Empty set (0.00 sec)
+
+
+5. Display all the Part names starting with the letter ‘S’.   
+mysql> select pname from parts where pname like 's%';
+Or
+mysql> SELECT pname
+    -> FROM parts
+    -> WHERE LEFT(pname, 1) = 's';
+Or
+SELECT pname 
+FROM parts 
+WHERE LOWER(LEFT(pname, 1)) = 's';
+Or
+SELECT pname 
+FROM parts 
+WHERE SUBSTRING(pname, 1, 1) = 's';
+Or
+SELECT pname 
+FROM parts 
+WHERE CHARACTER_LENGTH(pname) > 0 AND LEFT(pname, 1) = 's';
+Or
+mysql> select * from supplier where city like 'L%';
+
+
+6. Display all the Suppliers, belonging to cities starting with the letter ‘L’.   
+
+mysql> select * from supplier where city like 'L%';
+
+
+7. Display all the Projects, with the third letter in JNAME as ‘n’.
+mysql> select * from projects where jname like '__n%';
+
+
+
+
+

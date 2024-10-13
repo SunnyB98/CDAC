@@ -1,0 +1,386 @@
+show databases;
+use cdacmumbai;
+show tables;
++----------------------+
+| Tables_in_cdacmumbai |
++----------------------+
+| semp                 |
++----------------------+
+
+1. Create the table SEMP with the following structure:-
+
+create table SEMP( EMPNO CHAR(4), EMPNAME CHAR(20), BASIC FLOAT, DEPTNO CHAR(2), DEPTHEAD CHAR(4)
+		 );
+
+
+mysql> SHOW TABLES;
++----------------------+
+| Tables_in_cdacmumbai |
++----------------------+
+| semp                 |
++----------------------+
+1 row in set (0.00 sec)
+
+
+mysql> SHOW COLUMNS FROM SEMP;
++----------+----------+------+-----+---------+-------+
+| Field    | Type     | Null | Key | Default | Extra |
++----------+----------+------+-----+---------+-------+
+| EMPNO    | char(4)  | YES  |     | NULL    |       |
+| EMPNAME  | char(20) | YES  |     | NULL    |       |
+| BASIC    | float    | YES  |     | NULL    |       |
+| DEPTNO   | char(2)  | YES  |     | NULL    |       |
+| DEPTHEAD | char(4)  | YES  |     | NULL    |       |
++----------+----------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+
+2. Create the table SDEPT with the following structure:-
+DEPTNO CHAR(2)
+DEPTNAME CHAR(15)
+
+
+mysql> CREATE TABLE SDEPT(DEPTNO CHAR(2), DEPTNAME CHAR(15));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SHOW TABLES;
++----------------------+
+| Tables_in_cdacmumbai |
++----------------------+
+| sdept                |
+| semp                 |
++----------------------+
+2 rows in set (0.00 sec)
+
+
+mysql> USE SDEPT;
+ERROR 1049 (42000): Unknown database 'sdept'
+mysql> SHOW COLUMNS FROM SDEPT;
++----------+----------+------+-----+---------+-------+
+| Field    | Type     | Null | Key | Default | Extra |
++----------+----------+------+-----+---------+-------+
+| DEPTNO   | char(2)  | YES  |     | NULL    |       |
+| DEPTNAME | char(15) | YES  |     | NULL    |       |
++----------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> select * from sdept;
++--------+-------------+
+| DEPTNO | DEPTNAME    |
++--------+-------------+
+| 20     | Development |
+| 20     | Training    |
++--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SHOW COLUMNS FROM SEMP;
++----------+----------+------+-----+---------+-------+
+| Field    | Type     | Null | Key | Default | Extra |
++----------+----------+------+-----+---------+-------+
+| EMPNO    | char(4)  | YES  |     | NULL    |       |
+| EMPNAME  | char(20) | YES  |     | NULL    |       |
+| BASIC    | float    | YES  |     | NULL    |       |
+| DEPTNO   | char(2)  | YES  |     | NULL    |       |
+| DEPTHEAD | char(4)  | YES  |     | NULL    |       |
++----------+----------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+4. Insert into the SEMP table the following values:-
+
+0001, SUNIL, 6000, 10
+0002, HIREN, 8000, 20
+0003, ALI, 4000, 10, 0001
+0004, GEORGE, 6000, 0002
+
+Ans -->
+
+insert into SEMP (empno, empname, basic, deptno) value('0001', 'SUNIL', 6000, '10');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into SEMP (empno, empname, basic, deptno) value('0002', 'HIREN', 8000, '20');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into SEMP (empno, empname, basic, deptno) value('0002', 'HIREN', 8000, '20');
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> insert into SEMP (empno, empname, basic, deptno,depthead) value('0003', 'ALL', 4000, '10', '0001');
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> insert into SEMP (empno, empname, basic, depthead) value('0004', 'GEORGE', 6000,'0002');
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> select * from semp;
++-------+---------+-------+--------+----------+
+| EMPNO | EMPNAME | BASIC | DEPTNO | DEPTHEAD |
++-------+---------+-------+--------+----------+
+| 0001  | SUNIL   |  6000 | 10     | NULL     |
+| 0002  | HIREN   |  8000 | 20     | NULL     |
+| 0002  | HIREN   |  8000 | 20     | NULL     |
+| 0003  | ALL     |  4000 | 10     | 0001     |
+| 0004  | GEORGE  |  6000 | NULL   | 0002     |
++-------+---------+-------+--------+----------+
+5 rows in set (0.01 sec)
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+4. Create S, P, J, SPJ tables as specified below and insert a few rows in each table:-
+
+Table - S- supplier:
+
+mysql> show columns from supplier;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| S#     | char(10) | YES  |     | NULL    |       |
+| Sname  | char(10) | YES  |     | NULL    |       |
+| Status | char(10) | YES  |     | NULL    |       |
+| City   | char(10) | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+
+Table - P - Parts:
+
+mysql> create table parts(`P#` char(20), Pname char(20), Pcolor char(20), PWeight char(20), Pcity char(20));
+Query OK, 0 rows affected (0.06 sec)
+
+
++---------+----------+------+-----+---------+-------+
+| Field   | Type     | Null | Key | Default | Extra |
++---------+----------+------+-----+---------+-------+
+| P#      | char(20) | YES  |     | NULL    |       |
+| Pname   | char(20) | YES  |     | NULL    |       |
+| Pcolor  | char(20) | YES  |     | NULL    |       |
+| PWeight | char(20) | YES  |     | NULL    |       |
+| Pcity   | char(20) | YES  |     | NULL    |       |
++---------+----------+------+-----+---------+-------+
+
+
+Table - SPJ- SUPPLIER_PARTS_PROJECT :
+
+
+mysql> create table SUPPLIER_PARTS_PROJECT (`S#` char(20), `P#` char(20), `J#`char(20), Qty char(20));
+Query OK, 0 rows affected (0.03 sec)
+
+
+mysql> show columns from SUPPLIER_PARTS_PROJECT ;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| S#    | char(20) | YES  |     | NULL    |       |
+| P#    | char(20) | YES  |     | NULL    |       |
+| J#    | char(20) | YES  |     | NULL    |       |
+| Qty   | char(20) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+(Spend 30min to create three table)
+-----------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------Inserting Data Into the Table------------------------------------------------------------------------------------
+
+Table- 1    ----S---SUPPLIER------
+
+mysql> insert into supplier values('S1', 'Smith', '20', 'London');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into supplier values('S2', 'Jones', '10', 'Paris'), ('S3', 'Blake', '30', 'Paris'), ('S4', 'Clark', '20', 'London'), ('S5', 'Adams', '30', 'Athens');
+Query OK, 4 rows affected (0.01 sec)
+
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from supplier;
++------+-------+--------+--------+
+| S#   | Sname | Status | City   |
++------+-------+--------+--------+
+| S1   | Smith | 20     | London |
+| S2   | Jones | 10     | Paris  |
+| S3   | Blake | 30     | Paris  |
+| S4   | Clark | 20     | London |
+| S5   | Adams | 30     | Athens |
++------+-------+--------+--------+
+5 rows in set (0.00 sec)
+
+
+
+*************************************************************
+
+Table -2 	-P- PARTS-
+
+mysql> insert into parts values('P1', 'Nut', 'Red', '12','London'), ('P2', 'Bolt', 'Green','17', 'Paris'), ('P3', 'Screw', 'Blue','17', 'Rome'), ('P4', 'Screw', 'Red', '14', 'London'), ('P5', 'Cam', 'Blue', '12', 'Paris'), ('P6', 'Cog', 'Red', '19', 'London');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from parts;
++------+-------+--------+---------+--------+
+| P#   | Pname | Pcolor | PWeight | Pcity  |
++------+-------+--------+---------+--------+
+| P1   | Nut   | Red    | 12      | London |
+| P2   | Bolt  | Green  | 17      | Paris  |
+| P3   | Screw | Blue   | 17      | Rome   |
+| P4   | Screw | Red    | 14      | London |
+| P5   | Cam   | Blue   | 12      | Paris  |
+| P6   | Cog   | Red    | 19      | London |
++------+-------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+*************************************************************
+
+Table -3       ----J-----PROJECTS------------
+
+
+
+mysql> create table projects (`J1` char(20), Jname char(20), City char(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into projects values ('J1', 'Sorter', 'Paris');
+
+
+mysql> insert into projects values ('J2', 'Punch', 'Rome'), ('J3', 'Reader', 'Athens'), ('J4', 'Console', 'Athens'), ('J5', 'Collector', 'London'), ('J6', 'Terminal', 'Oslo'), ('J7', 'Tape', 'London');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
++------+-----------+--------+
+| J1   | Jname     | City   |
++------+-----------+--------+
+| J1   | Sorter    | Paris  |
+| J2   | Punch     | Rome   |
+| J3   | Reader    | Athens |
+| J4   | Console   | Athens |
+| J5   | Collector | London |
+| J6   | Terminal  | Oslo   |
+| J7   | Tape      | London |
++------+-----------+--------+
+
+
+-------------------------------------------------------------------
+
+Table - 4  ---SPJ-------SUPPLIER_PARTS_PROJECT-----		
+
+
+
+
+mysql> insert into SUPPLIER_PARTS_PROJECT values('S1', 'P1','J1', '200'),('S1', 'P1','J4', '700'), ('S2', 'P3','J1', '400'),('S2', 'P3','J2', '200'),('S2', 'P3','J3', '200'), ('S2', 'P3','J4', '500'),('S2', 'P3','J5', '600'),('S2','P3','J5', '600'),('S2', 'P3','J6', '400'),('S2', 'P3','J7', '800'),('S2', 'P5','J2', '100'),('S3', 'P3','J1', '200'),('S3', 'P4','J2', '500'),('S4', 'P6','J3', '300'),('S4', 'P6','J7', '300'),('S5', 'P2','J2', '200'),('S5', 'P2','J4', '100'),('S5', 'P5','J5', '500'),('S5', 'P5','J7', '100'),('S5', 'P1','J4', '100'),('S5', 'P3','J4', '200'),('S5', 'P4','J4', '800'),('S5', 'P5','J4', '400'),('S5', 'P6','J4', '500');
+Query OK, 24 rows affected (0.01 sec)
+Records: 24  Duplicates: 0  Warnings: 0
+       
+
+mysql> select * from     SUPPLIER_PARTS_PROJECT;
++------+------+------+------+
+| S#   | P#   | J#   | Qty  |
++------+------+------+------+
+| S1   | P1   | J1   | 200  |
+| S1   | P1   | J4   | 700  |
+| S2   | P3   | J1   | 400  |
+| S2   | P3   | J2   | 200  |
+| S2   | P3   | J3   | 200  |
+| S2   | P3   | J4   | 500  |
+| S2   | P3   | J5   | 600  |
+| S2   | P3   | J5   | 600  |
+| S2   | P3   | J6   | 400  |
+| S2   | P3   | J7   | 800  |
+| S2   | P5   | J2   | 100  |
+| S3   | P3   | J1   | 200  |
+| S3   | P4   | J2   | 500  |
+| S4   | P6   | J3   | 300  |
+| S4   | P6   | J7   | 300  |
+| S5   | P2   | J2   | 200  |
+| S5   | P2   | J4   | 100  |
+| S5   | P5   | J5   | 500  |
+| S5   | P5   | J7   | 100  |
+| S5   | P1   | J4   | 100  |
+| S5   | P3   | J4   | 200  |
+| S5   | P4   | J4   | 800  |
+| S5   | P5   | J4   | 400  |
+| S5   | P6   | J4   | 500  |
++------+------+------+------+
+24 rows in set (0.00 sec)
+
+
+------------------------------------OPERATIONS-----------------
+
+
+5. Display all the data from the S table. 
+select * from supplier;
+
+6. Display only the S# and SNAME fields from the S table.    
+select `S#`, sname from supplier;
+
+7. Display the PNAME and COLOR from the P table for the CITY=”London”.   
+mysql> select pname, pcolor from parts where pcity ='London';
+
+8. Display all the Suppliers from London.   
+select * from supplier where City='London';
+
+9. Display all the Suppliers from Paris or Athens. 
+   
+mysql> select * from supplier where City = 'Paris' or city='Athens';
+Or
+mysql> select * from supplier where city in('paris','athens');
+Or
+mysql> select * from supplier where city='paris' union select * from supplier where city='athens';
+Or
+mysql> select * from supplier where city like 'paris' or city like 'athens';
+
+
+10. Display all the Projects in Athens.    
+
+mysql> select * from projects where city='athens';
+Or
+mysql> select * from projects where city like 'athens';
+Or
+mysql> select * from projects where city in('athens');
+
+11. Display all the Partnames with the weight between 12 and 14 (inclusive of both).  
+
+mysql> select pname from parts where pweight between 12 and 14;
+Or
+mysql> select pname from parts where pweight >=10 and pweight <=14;
+OR
+mysql> select pname from parts where pweight in(12,13,14);
+Or
+mysql> select pname from parts where pweight=12 or pweight=13 or pweight=14;
+
+12. Display all the Suppliers with a Status greater than or equal to 20. 
+
+mysql> select * from supplier where status >=20;
+
+13. Display all the Suppliers except the Suppliers from London.  
+
+mysql> select * from supplier where city !='London';
+Or
+mysql> select * from supplier where city <> 'London';
+
+
+14. Display only the Cities from where the Suppliers come from.    
+mysql> select distinct city from supplier;
+
+mysql> select pname, pweight as weightInGrams, pweight*1000 as weightInMilligrams, pweight /1000 as weightInKilograms from parts;
+
+
++-------+---------------+--------------------+-------------------+
+| pname | weightInGrams | weightInMilligrams | weightInKilograms |
++-------+---------------+--------------------+-------------------+
+| Nut   | 12            |              12000 |             0.012 |
+| Bolt  | 17            |              17000 |             0.017 |
+| Screw | 17            |              17000 |             0.017 |
+| Screw | 14            |              14000 |             0.014 |
+| Cam   | 12            |              12000 |             0.012 |
+| Cog   | 19            |              19000 |             0.019 |
++-------+---------------+--------------------+-------------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
