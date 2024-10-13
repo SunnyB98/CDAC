@@ -1,0 +1,17 @@
+Assignment -2
+
+1) Which field of the Customers table is the primary key? 
+---> Cnum
+
+2) What is the 4th column of the Customers table? 
+---> Rating
+
+3) What is another word for row?  For column? 
+---> row - Another word for row is record or tuple.(file)
+---> column - Another word for column is field or attribute.
+
+4) Why isn’t it possible to see the first five rows of a table? 
+---> In R-DBMS data is not store sequentially. We store data in table in the of rows and column. In R-DBMS table is on the server and we not store rows of table sequentially on the server. So, because of this any user at a  time can insert data into the row by simple using insert command. Data will be store into the rows at different-different locations. So, it is not possibe to see first 5 rows inserted in table.
+
+
+

@@ -1,0 +1,73 @@
+Assignment- 1
+------------------------------------------------------------
+
+
+Create the following tables with the given structures and insert sample data as specified: -
+
+A) SALESPEOPLE
+Snum int(4)
+Sname varchar(10)
+City varchar(10)
+Comm float(3,2)
+
+
+B) CUSTOMERS
+Cnum int(4)
+Cname varchar(10)
+City varchar(10)
+Rating int(4)
+Snum int(4)
+
+
+C) ORDERS
+Onum int(4)
+Amt float(7,2)
+Odate date
+Cnum int(4)
+Snum int(4)
+-----------------------3 tables created-----------------------
+
+mysql> create table SALESPEOPLE( Snum int(4), Sname varchar(10), City varchar(10), Comm float(3,2));
+Query OK, 0 rows affected, 2 warnings (0.04 sec)
+
+mysql> create table CUSTOMERS (Cnum int(4), Cname varchar(10), City varchar(10), Rating int(4), Snum int(4));
+Query OK, 0 rows affected, 3 warnings (0.05 sec)
+
+mysql> create table ORDERS (Onum int(4), Amt float(7,2), Odate date, Cnum int(4), Snum int(4));
+Query OK, 0 rows affected, 4 warnings (0.04 sec)
+
+mysql> show tables;
++----------------------+
+| Tables_in_cdacmumbai |
++----------------------+
+| customers            |
+| orders               |
+| salespeople          |
+| sdept                |
+| semp                 |
+| supplier             |
++----------------------+
+6 rows in set (0.00 sec)
+-------------------------------------------------------------------
+
+
+
+*************************ORDERS TABLE******************************
+
+
+
+create table ORDERS (Cnum int, Amt float, Odate date, Cnum int, Snum int);
+
+mysql> INSERT INTO ORDERS(Onum, Amt, Odate, Cnum, Snum) values (3006,1098.16, '1990-10-03', 2008, 1007),(3009, 1713.23,'1990-10-04', 2002,1003), (3007, 75.75, '1990-10-04',2004,1002), (3008,4723.00,'1990-10-05',2006,1001), (3010, 1309.95, '1990-10-06',2004,1002), (3011, 9891.88,'1990-10-06', 2006, 1001);
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+12 rows in set (0.00 sec)
+****************************Done*********************************
+similar for above 2 tables 
+
+********************************completed**************************
+
+
+
+
