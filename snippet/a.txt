@@ -1,1 +1,39 @@
+class Main {
+    public static void main(String[] args) {
+            double a,b,c;
+            a=3.0/0;
+            b=0/4.0;
+            c=0/0.0;
+            
+            System.out.println(a);  //Infinite
+            System.out.println(b);  //0.0
+            System.out.println(c);  //NaN
+ 
+            // int x;
+            // x=5;
+            // {
+            //     int y=6;
+            //     System.out.print(x +" "+ y);  //x=5,y=6 <--ok
+            // }
+            // System.out.println(x+" "+y);// compilation error
+            //for y shows cannot find symbol i.e. its a compile time error 
+            //i.e.there is syntax error in your code & hence unable to//create .class               //file 
+            //all error having ending with exception are runtime errors
 
+
+             //int i=5;
+            //System.out.println(i); //5
+            //System.out.println("i="+ ++i); //6
+            //System.out.println("i="+i++); //6
+            
+            if(args.length>0){
+                System.out.println(args.length);  // The snippet compiles and runs but                                                   //does not print anything
+            }
+            
+
+
+
+
+
+    }
+}
