@@ -1,0 +1,195 @@
+
+In this challenge, you will use a for loop to increment a variable through a range.
+
+Input Format
+
+You will be given two positive integers,  and  (), separated by a newline.
+
+Output Format
+
+For each integer  in the inclusive interval :
+
+If , then print the English representation of it in lowercase. That is "one" for , "two" for , and so on.
+Else if  and it is an even number, then print "even".
+Else if  and it is an odd number, then print "odd".
+Note: 
+
+Sample Input
+
+8
+11
+Sample Output
+
+eight
+nine
+even
+odd
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Input Format
+
+Input will contain four integers -  , one per line.
+
+Output Format
+
+Return the greatest of the four integers.
+PS: I/O will be automatically handled.
+
+Sample Input
+
+3
+4
+6
+5
+Sample Output
+
+6
+-------------------------------------------------
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+int main() {
+    // Complete the code.
+    
+    string one[] = {"", "one", "two", "three", "four" , "five", "six" , "seven",
+                   "eight", "nine"};
+    int a, b;
+    cin >> a >>b;
+    
+    for(int i=a;i<=b;i++)
+    {
+        if(i<=9)
+        {
+            cout << one[i] << endl;
+        }
+        else if(i%2==0){
+            cout << "even" << endl;
+        }
+        else{
+            cout << "odd" << endl;
+        }
+    }
+    return 0;
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+
+int max_of_four(int a, int b, int c, int d)
+{
+    
+    int greatest = a;
+    
+
+    if(greatest<b){
+        greatest=b;
+    }
+    if(greatest<c){
+        greatest=c;
+    }
+    if(greatest<d){
+         greatest=d;
+    }
+       
+    
+    return greatest;
+}
+
+int main() {
+    int a, b, c, d;
+    scanf("%d %d %d %d", &a, &b, &c, &d);
+    int ans = max_of_four(a, b, c, d);
+    printf("%d", ans);
+    
+    return 0;
+}
+----------------------------------------------------------------------------------------------------
+Function Description
+
+Complete the update function in the editor below.
+
+update has the following parameters:
+
+int *a: an integer
+int *b: an integer
+Returns
+
+The function is declared with a void return type, so there is no value to return. Modify the values in memory so that  contains their sum and  contains their absoluted difference.
+
+
+Input Format
+
+Input will contain two integers,  and , separated by a newline.
+
+Sample Input
+
+4
+5
+Sample Output
+
+9
+1
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#include <stdio.h>
+
+void update(int *a,int *b) {
+    // Complete this function  
+    int s = *a + *b;
+    int d = *a - *b;
+    if(d < 0)
+        d=-d;
+    *a = s;
+    *b = d;  
+}
+
+int main() {
+    int a, b;
+    int *pa = &a, *pb = &b;
+    
+    scanf("%d %d", &a, &b);
+    update(pa, pb);
+    printf("%d\n%d", a, b);
+
+    return 0;
+}
+------------------------------------------------------------
+
+Reverse The Array in C++:
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+    int n;
+    cin >> n;
+    int arr[n];
+    for(int i=0;i<n;i++)
+    {
+        cin >> arr[i];
+    }
+    for(int j=n-1; j >= 0;j--)
+    {
+        cout << arr[j] << " ";
+    }
+    
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
