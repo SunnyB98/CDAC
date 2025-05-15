@@ -1,0 +1,133 @@
+Javascript: MEAN, MERN ,MEVN
+PHP:LAMP fullstack:
+	L: Linux------platform
+	A: Apache-----Web application hosting
+	M: MySQL-----RDBMS
+	P: phP------server side programming
+	
+JAVA:JSP  (Java)
+     Servlet
+     JDBC
+     Spring MVC
+     Hibernate, JPA
+     Spring Boot API
+
+.NET:(C# , VB.net)
+     Power of  C++
+     Simplicity of java
+     Elegance of VB
+
+     ASP.NET MVC
+     ADO.NET
+     Entity Framework
+     ASP.NET Web API
+	
+
+
+
+Ravi Tambade:
+	9881735801
+
+
+IDE: Integrated Development Tool (VS.studio 2022)
+	RAD:Rapid Application Development
+
+app.config
+internal
+ReadLine, WriteLine static method of Console class
+EntryPoint function: Main
+Solution
+Project
+Console Application
+Namespace
+Visual studio.net:
+ Solution-----one or more project----------------Build----------------Binary executable files
+		source code (.cs files)-----   (compile + bundled)----
+		Console Application-----------csc.exe----------------- .exe file  or .dll files
+				c# Code-------C# compiler----------------IL code
+.Net Framework:
+		 a runtime
+		 CLR :Common Language Runtime (.net exeuction engine)
+		 CTS :Common Type System 
+				Value types :primitive types:
+						int, float, double, boolean, char
+					     user defined types:
+						enum,struct
+						
+				Reference types:
+						class ,interface,
+						delegate, event
+
+				FCL:Framework Class Library (.dll's)
+					(Dynamic Link Library)
+		    CLS
+		Divide and Rule
+	What is the difference between exe and dll
+		exe----Self executable application image
+		DLL----Dependency executable reusable library
+
+
+
+	 .net framework
+	 CLR:Execution Engine (Common Language Runtime)
+		Assembly loader,
+		code verifier
+		JIT (converting IL code into native code)
+		GC  (automatic memory management of HEAP)
+			(Mark and Sweep algorithm)
+
+	 CTS:Common Type System
+		 Value types and reference types
+		 FCL: inbuilt dll's
+			system.dll
+			catalog.dll
+			mysql.data.dll
+
+		 Assemblies:
+			Assembly: a logical unit of deployment on .net platform
+				consist of  IL Code
+
+	 exe and DLL
+	  namespaces
+         
+	  primitive types
+	  user defined types: class, structure
+	  Application execution memory: heap and stack
+	  Heap is managed by Garbage Collector ( is a part of CLR)
+
+		 ILDASM:Intermediate Language Disassembler
+
+
+
+	 Using Visual studio
+		Solution Builder creates empty solution
+				Solution consits one or more projects
+					Console Application
+					Class Library 
+
+		Solution builer after writing code Builds Solution
+				Compiler converts C# code into IL code
+				IL code is bundled into assembly  (exe or dll)
+				DLL or exe contains IL code
+
+		Application is submitted to Execute by run option
+
+			Exe is submitted to OS for execution
+			OS will create a Process (instance or running application)
+				OS will assign primary thread to the process
+				Primary thread will read manifest of assemly and 
+					loads CLR into process
+					within Process APPlication Domain is created 
+					 within application domain IL is loaded by 
+							Assembly loader of CLR
+					 Primary Thread invokes Entry Point Main function
+						
+
+Design Principle:
+
+SOLID:
+	S :Single Responsibility Prinicple
+	O
+	L
+	I
+	D
