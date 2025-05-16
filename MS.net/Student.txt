@@ -1,0 +1,98 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static Dictionary<string, Dictionary<string, object>> students = new Dictionary<string, Dictionary<string, object>>();
+
+    static void Main(string[] args)
+    {
+        if (args.Length == 0)
+        {
+            Console.WriteLine("Usage:\n" +
+                "add/update roll fname lname email subj1 subj2 subj3\n" +
+                "delete roll");
+            return;
+        }
+
+        string operation = args[0].ToLower();
+
+        switch (operation)
+        {
+            case "add":
+            case "update":
+                if (args.Length != 8)
+                {
+                    Console.WriteLine("Usage: add/update roll fname lname email subj1 subj2 subj3");
+                    return;
+                }
+
+                string roll = args[1];
+                string fname = args[2];
+                string lname = args[3];
+                string email = args[4];
+                int subj1 = int.Parse(args[5]);
+                int subj2 = int.Parse(args[6]);
+                int subj3 = int.Parse(args[7]);
+
+                AddOrUpdateStudent(operation, roll, fname, lname, email, subj1, subj2, subj3);
+                break;
+
+            case "delete":
+                if (args.Length != 2)
+                {
+                    Console.WriteLine("Usage: delete roll");
+                    return;
+                }
+
+                DeleteStudent(args[1]);
+                break;
+
+            default:
+                Console.WriteLine("Invalid operation. Use add, update, or delete.");
+                break;
+        }
+    }
+
+    static void AddOrUpdateStudent(string operation, string roll, string fname, string lname, string email, int s1, int s2, int s3)
+    {
+        Dictionary<string, object> studentData = new Dictionary<string, object>()
+        {
+            {"first_name", fname },
+            {"last_name", lname },
+            {"email", email },
+            {"subjects", new List<int>{s1, s2, s3} }
+        };
+
+        students[roll] = studentData;
+
+        Console.WriteLine($"Student {(operation == "add" ? "added" : "updated")} successfully.");
+        PrintStudents();
+    }
+
+    static void DeleteStudent(string roll)
+    {
+        if (students.ContainsKey(roll))
+        {
+            students.Remove(roll);
+            Console.WriteLine("Student deleted successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Roll number not found.");
+        }
+
+        PrintStudents();
+    }
+
+    static void PrintStudents()
+    {
+        Console.WriteLine("Current Student Data:");
+        foreach (var student in students)
+        {
+            var data = student.Value;
+            Console.WriteLine($"Roll No: {student.Key}, Name: {data["first_name"]} {data["last_name"]}, Email: {data["email"]}, Subjects: {string.Join(", ", (List<int>)data["subjects"])}");
+        }
+        Console.WriteLine("------------------------------------");
+    }
+}
