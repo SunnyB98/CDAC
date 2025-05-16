@@ -1,0 +1,131 @@
+using System;
+using System.Collections.Generic;
+
+namespace StudentManagerApp
+{
+    class Program
+    {
+        // Nested Dictionary to store student data
+        static Dictionary<string, Dictionary<string, string>> students = new Dictionary<string, Dictionary<string, string>>();
+
+        static void Main(string[] args)
+        {
+            if (args.Length == 0)
+            {
+                Console.WriteLine("No command provided. Use 'add', 'update', or 'delete'.");
+                return;
+            }
+
+            string command = args[0].ToLower();
+
+            switch (command)
+            {
+                case "add":
+                    AddStudent(args);
+                    break;
+
+                case "update":
+                    UpdateStudent(args);
+                    break;
+
+                case "delete":
+                    DeleteStudent(args);
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid command. Use 'add', 'update', or 'delete'.");
+                    break;
+            }
+
+            // Display all student data
+            Console.WriteLine("\n--- Current Student Data ---");
+            foreach (var student in students)
+            {
+                Console.WriteLine($"Roll No: {student.Key}");
+                foreach (var detail in student.Value)
+                {
+                    Console.WriteLine($"{detail.Key}: {detail.Value}");
+                }
+                Console.WriteLine("------------------------");
+            }
+        }
+
+        static void AddStudent(string[] args)
+        {
+            if (args.Length < 8)
+            {
+                Console.WriteLine("Usage: add <rollNo> <firstName> <lastName> <email> <subject1> <subject2> <subject3>");
+                return;
+            }
+
+            string rollNo = args[1];
+
+            if (students.ContainsKey(rollNo))
+            {
+                Console.WriteLine("Student with this roll number already exists.");
+                return;
+            }
+
+            students[rollNo] = new Dictionary<string, string>
+            {
+                { "FirstName", args[2] },
+                { "LastName", args[3] },
+                { "Email", args[4] },
+                { "Subject1", args[5] },
+                { "Subject2", args[6] },
+                { "Subject3", args[7] }
+            };
+
+            Console.WriteLine("Student added successfully.");
+        }
+
+        static void UpdateStudent(string[] args)
+        {
+            if (args.Length < 4)
+            {
+                Console.WriteLine("Usage: update <rollNo> <fieldName> <newValue>");
+                return;
+            }
+
+            string rollNo = args[1];
+            string field = args[2];
+            string newValue = args[3];
+
+            if (!students.ContainsKey(rollNo))
+            {
+                Console.WriteLine("Student not found.");
+                return;
+            }
+
+            if (students[rollNo].ContainsKey(field))
+            {
+                students[rollNo][field] = newValue;
+                Console.WriteLine("Student data updated.");
+            }
+            else
+            {
+                Console.WriteLine("Field does not exist.");
+            }
+        }
+
+        static void DeleteStudent(string[] args)
+        {
+            if (args.Length < 2)
+            {
+                Console.WriteLine("Usage: delete <rollNo>");
+                return;
+            }
+
+            string rollNo = args[1];
+
+            if (students.Remove(rollNo))
+            {
+                Console.WriteLine("Student deleted successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Student not found.");
+            }
+        }
+    }
+}
