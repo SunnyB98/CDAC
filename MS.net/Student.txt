@@ -3,96 +3,170 @@ using System.Collections.Generic;
 
 class Program
 {
+    // Nested Dictionary to store student data
     static Dictionary<string, Dictionary<string, object>> students = new Dictionary<string, Dictionary<string, object>>();
 
     static void Main(string[] args)
     {
-        if (args.Length == 0)
+        while (true)
         {
-            Console.WriteLine("Usage:\n" +
-                "add/update roll fname lname email subj1 subj2 subj3\n" +
-                "delete roll");
+            Console.WriteLine("\n----- Student Management Menu -----");
+            Console.WriteLine("1. Add Student");
+            Console.WriteLine("2. Update Student");
+            Console.WriteLine("3. Delete Student");
+            Console.WriteLine("4. Display All Students");
+            Console.WriteLine("5. Exit");
+            Console.Write("Enter your choice (1-5): ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    AddStudent();
+                    break;
+                case "2":
+                    UpdateStudent();
+                    break;
+                case "3":
+                    DeleteStudent();
+                    break;
+                case "4":
+                    PrintStudents();
+                    break;
+                case "5":
+                    Console.WriteLine("Exiting program.");
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice. Try again.");
+                    break;
+            }
+        }
+    }
+
+    static void AddStudent()
+    {
+        Console.Write("\nEnter Roll Number: ");
+        string roll = Console.ReadLine();
+
+        if (students.ContainsKey(roll))
+        {
+            Console.WriteLine("Student with this roll number already exists.");
             return;
         }
 
-        string operation = args[0].ToLower();
+        Console.Write("Enter First Name: ");
+        string fname = Console.ReadLine();
 
-        switch (operation)
-        {
-            case "add":
-            case "update":
-                if (args.Length != 8)
-                {
-                    Console.WriteLine("Usage: add/update roll fname lname email subj1 subj2 subj3");
-                    return;
-                }
+        Console.Write("Enter Last Name: ");
+        string lname = Console.ReadLine();
 
-                string roll = args[1];
-                string fname = args[2];
-                string lname = args[3];
-                string email = args[4];
-                int subj1 = int.Parse(args[5]);
-                int subj2 = int.Parse(args[6]);
-                int subj3 = int.Parse(args[7]);
+        Console.Write("Enter Email: ");
+        string email = Console.ReadLine();
 
-                AddOrUpdateStudent(operation, roll, fname, lname, email, subj1, subj2, subj3);
-                break;
+        Console.Write("Enter Subject 1 Marks: ");
+        int s1 = int.Parse(Console.ReadLine());
 
-            case "delete":
-                if (args.Length != 2)
-                {
-                    Console.WriteLine("Usage: delete roll");
-                    return;
-                }
+        Console.Write("Enter Subject 2 Marks: ");
+        int s2 = int.Parse(Console.ReadLine());
 
-                DeleteStudent(args[1]);
-                break;
+        Console.Write("Enter Subject 3 Marks: ");
+        int s3 = int.Parse(Console.ReadLine());
 
-            default:
-                Console.WriteLine("Invalid operation. Use add, update, or delete.");
-                break;
-        }
-    }
-
-    static void AddOrUpdateStudent(string operation, string roll, string fname, string lname, string email, int s1, int s2, int s3)
-    {
         Dictionary<string, object> studentData = new Dictionary<string, object>()
         {
-            {"first_name", fname },
-            {"last_name", lname },
-            {"email", email },
-            {"subjects", new List<int>{s1, s2, s3} }
+            { "first_name", fname },
+            { "last_name", lname },
+            { "email", email },
+            { "subjects", new List<int> { s1, s2, s3 } }
         };
 
         students[roll] = studentData;
-
-        Console.WriteLine($"Student {(operation == "add" ? "added" : "updated")} successfully.");
+        Console.WriteLine("Student added successfully.");
         PrintStudents();
     }
 
-    static void DeleteStudent(string roll)
+    static void UpdateStudent()
     {
-        if (students.ContainsKey(roll))
+        Console.Write("\nEnter Roll Number to Update: ");
+        string roll = Console.ReadLine();
+
+        if (!students.ContainsKey(roll))
         {
-            students.Remove(roll);
+            Console.WriteLine("Student not found.");
+            return;
+        }
+
+        var student = students[roll];
+
+        Console.WriteLine("What would you like to update?");
+        Console.WriteLine("1. First Name");
+        Console.WriteLine("2. Last Name");
+        Console.WriteLine("3. Email");
+        Console.WriteLine("4. Subject 1 Marks");
+        Console.WriteLine("5. Subject 2 Marks");
+        Console.WriteLine("6. Subject 3 Marks");
+
+        Console.Write("Enter choice (1-6): ");
+        string option = Console.ReadLine();
+
+        switch (option)
+        {
+            case "1":
+                Console.Write("Enter new First Name: ");
+                student["first_name"] = Console.ReadLine();
+                break;
+            case "2":
+                Console.Write("Enter new Last Name: ");
+                student["last_name"] = Console.ReadLine();
+                break;
+            case "3":
+                Console.Write("Enter new Email: ");
+                student["email"] = Console.ReadLine();
+                break;
+            case "4":
+            case "5":
+            case "6":
+                var subjects = (List<int>)student["subjects"];
+                int subIndex = int.Parse(option) - 4;
+                Console.Write($"Enter new marks for Subject {subIndex + 1}: ");
+                subjects[subIndex] = int.Parse(Console.ReadLine());
+                break;
+            default:
+                Console.WriteLine("Invalid option.");
+                return;
+        }
+
+        Console.WriteLine("Student updated successfully.");
+        PrintStudents();
+    }
+
+    static void DeleteStudent()
+    {
+        Console.Write("\nEnter Roll Number to Delete: ");
+        string roll = Console.ReadLine();
+
+        if (students.Remove(roll))
             Console.WriteLine("Student deleted successfully.");
-        }
         else
-        {
             Console.WriteLine("Roll number not found.");
-        }
 
         PrintStudents();
     }
 
     static void PrintStudents()
     {
-        Console.WriteLine("Current Student Data:");
+        Console.WriteLine("\n--- Current Student Data ---");
+        if (students.Count == 0)
+        {
+            Console.WriteLine("No student records found.");
+            return;
+        }
+
         foreach (var student in students)
         {
             var data = student.Value;
             Console.WriteLine($"Roll No: {student.Key}, Name: {data["first_name"]} {data["last_name"]}, Email: {data["email"]}, Subjects: {string.Join(", ", (List<int>)data["subjects"])}");
         }
-        Console.WriteLine("------------------------------------");
+        Console.WriteLine("-----------------------------");
     }
 }
