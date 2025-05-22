@@ -1,21 +1,33 @@
 using System;
 using SqlDataExporter.DataAccess;
-using SqlDataExporter.Utils;
+using System.Collections.Generic;
 
 namespace SqlDataExporter
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            string connectionString = "Server=localhost;Database=YourDBName;Trusted_Connection=True;";
-            string filePath = "employees.dat";
+            // Replace with your actual connection string
+            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=YourDBName;Integrated Security=True";
 
-            var fetcher = new SqlDataFetcher(connectionString);
-            var employees = fetcher.GetEmployees();
+            try
+            {
+                SqlDataFetcher fetcher = new SqlDataFetcher(connectionString);
 
-            FileWriter.WriteToFile(filePath, employees);
-            Console.WriteLine("Data written to file successfully.");
+                List<Employee> employees = fetcher.GetEmployees();
+
+                foreach (var emp in employees)
+                {
+                    Console.WriteLine($"ID: {emp.Id}, Name: {emp.Name}, Salary: {emp.Salary}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+
+            Console.ReadLine();
         }
     }
 }
