@@ -1,31 +1,27 @@
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.IO;
-using System.Text.Json;
+using SqlDataExporter.Models;
 
-namespace SqlDataExporter
+namespace SqlDataExporter.DataAccess
 {
     public class SqlDataFetcher
     {
-        private readonly string connectionString;
+        private readonly string _connectionString;
 
         public SqlDataFetcher(string connectionString)
         {
-            this.connectionString = connectionString;
+            _connectionString = connectionString;
         }
 
-        public List<Employee> FetchEmployees()
+        public List<Employee> GetEmployees()
         {
-            List<Employee> employees = new List<Employee>();
+            var employees = new List<Employee>();
+            string query = "SELECT id, name, salary, email FROM Employees";
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
             {
                 connection.Open();
-
-                string query = "SELECT Id, Name, Salary, Email FROM Employees"; // Update your table/columns if needed
-
-                using (SqlCommand command = new SqlCommand(query, connection))
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -34,26 +30,14 @@ namespace SqlDataExporter
                         {
                             Id = reader.GetInt32(0),
                             Name = reader.GetString(1),
-                            Salary = reader.GetInt32(2),
-                            Email = reader.GetString(3)
+                            Salary = reader.GetDecimal(2),
+                            Email = reader.GetString(3)  // <--- Corrected here
                         });
                     }
                 }
             }
 
             return employees;
-        }
-
-        public void ExportToFile(string filePath)
-        {
-            var employees = FetchEmployees();
-
-            string json = JsonSerializer.Serialize(employees, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
-
-            File.WriteAllText(filePath, json);
         }
     }
 }
