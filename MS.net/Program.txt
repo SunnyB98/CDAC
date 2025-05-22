@@ -9,7 +9,7 @@ namespace SqlDataExporter
         static void Main(string[] args)
         {
             // Replace with your actual connection string
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=YourDBName;Integrated Security=True";
+            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=Sample1;Integrated Security=True";
 
             try
             {
