@@ -27,7 +27,7 @@ namespace SqlDataExporter.DataAccess
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = "SELECT Id, Name, Salary FROM Employees"; // Make sure table/columns exist
+                string sql = "SELECT Id, Name, Salary FROM employee1";  // your table name
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -38,7 +38,7 @@ namespace SqlDataExporter.DataAccess
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Name = reader["Name"].ToString(),
-                            Salary = Convert.ToDecimal(reader["Salary"])  // Safe conversion here
+                            Salary = Convert.ToDecimal(reader["Salary"])
                         };
 
                         employees.Add(employee);
