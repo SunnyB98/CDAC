@@ -7,3 +7,9 @@ CREATE TABLE employee2 (
 
 
 string query = "SELECT id, name, salary, email FROM employee2";
+
+
+INSERT INTO employee2 (Id, Name, Salary) VALUES
+(1, 'John Doe', 50000.00),
+(2, 'Jane Smith', 60000.00),
+(3, 'Alice Johnson', 55000.00);
