@@ -1,0 +1,20 @@
+using SqlDataExporter.DataAccess;
+using SqlDataExporter.Utils;
+
+namespace SqlDataExporter
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string connectionString = "Server=localhost;Database=YourDBName;Trusted_Connection=True;";
+            string filePath = "employees.dat";
+
+            var fetcher = new SqlDataFetcher(connectionString);
+            var employees = fetcher.GetEmployees();
+
+            FileWriter.WriteToFile(filePath, employees);
+            Console.WriteLine("Data written to file successfully.");
+        }
+    }
+}

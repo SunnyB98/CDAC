@@ -1,0 +1,19 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using SqlDataExporter.Models;
+
+namespace SqlDataExporter.Utils
+{
+    public static class FileWriter
+    {
+        public static void WriteToFile(string filePath, List<Employee> employees)
+        {
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(fs, employees);
+            }
+        }
+    }
+}
