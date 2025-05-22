@@ -4,3 +4,6 @@ CREATE TABLE employee2 (
     salary DECIMAL(18, 2),
     email NVARCHAR(100)
 );
+
+
+string query = "SELECT id, name, salary, email FROM employee2";
