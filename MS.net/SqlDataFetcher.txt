@@ -1,38 +1,47 @@
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using SqlDataExporter.Models;
 
 namespace SqlDataExporter.DataAccess
 {
+    public class Employee
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Salary { get; set; }
+    }
+
     public class SqlDataFetcher
     {
-        private readonly string _connectionString;
+        private readonly string connectionString;
 
         public SqlDataFetcher(string connectionString)
         {
-            _connectionString = connectionString;
+            this.connectionString = connectionString;
         }
 
         public List<Employee> GetEmployees()
         {
             var employees = new List<Employee>();
-            string query = "SELECT id, name, salary, email FROM Employees";
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                conn.Open();
+                string sql = "SELECT Id, Name, Salary FROM Employees"; // Make sure table/columns exist
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        employees.Add(new Employee
+                        var employee = new Employee
                         {
-                            Id = reader.GetInt32(0),
-                            Name = reader.GetString(1),
-                            Salary = reader.GetDecimal(2),
-                            Email = reader.GetString(3)  // <--- Corrected here
-                        });
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Name = reader["Name"].ToString(),
+                            Salary = Convert.ToDecimal(reader["Salary"])  // Safe conversion here
+                        };
+
+                        employees.Add(employee);
                     }
                 }
             }
