@@ -1,39 +1,115 @@
 using System;
-using System.IO;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using Serilog;
 
-class TcpClientApp
+namespace ClientApp
 {
-    static void Main()
+    class Program
     {
-        Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console()
-            .WriteTo.File("Logs/client_log.txt", rollingInterval: RollingInterval.Day)
-            .CreateLogger();
+        static Socket clientSocket;
+        static bool connected = false;
+        static Thread receiveThread;
 
-        Log.Information("Connecting to server...");
-
-        TcpClient client = new TcpClient("127.0.0.1", 5000);
-        Log.Information("Connected to server.");
-
-        NetworkStream stream = client.GetStream();
-        StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-        StreamWriter writer = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
-
-        while (true)
+        static void Main()
         {
-            Console.Write("You: ");
-            string message = Console.ReadLine();
-            writer.WriteLine(message);
-            Log.Information("Client: {Message}", message);
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("clientlog.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
 
-            string serverMessage = reader.ReadLine();
-            Log.Information("Server: {ServerMessage}", serverMessage);
-            Console.WriteLine("Server: " + serverMessage);
+            ConnectToServer();
+
+            while (true)
+            {
+                if (!connected)
+                {
+                    Thread.Sleep(1000); // Avoid tight loop
+                    continue;
+                }
+
+                string msgToSend = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(msgToSend)) continue;
+
+                try
+                {
+                    byte[] data = Encoding.ASCII.GetBytes(msgToSend);
+                    clientSocket.Send(data);
+                    Log.Information("Sent to server: {0}", msgToSend);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Send failed: {0}", ex.Message);
+                    connected = false;
+                    Cleanup();
+                    ConnectToServer();
+                }
+            }
         }
 
-        client.Close();
+        static void ConnectToServer()
+        {
+            while (!connected)
+            {
+                try
+                {
+                    clientSocket?.Dispose();
+                    clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    clientSocket.Connect(IPAddress.Parse("127.0.0.1"), 1234);
+                    connected = true;
+                    Console.WriteLine("Connected to server.");
+                    Log.Information("Connected to server.");
+
+                    // Start new receive thread
+                    receiveThread = new Thread(ReceiveMessages);
+                    receiveThread.IsBackground = true;
+                    receiveThread.Start();
+                }
+                catch
+                {
+                    Console.WriteLine("Retrying connection in 3 seconds...");
+                    Log.Warning("Failed to connect. Retrying...");
+                    Thread.Sleep(3000);
+                }
+            }
+        }
+
+        static void ReceiveMessages()
+        {
+            try
+            {
+                while (connected)
+                {
+                    byte[] buffer = new byte[1024];
+                    int received = clientSocket.Receive(buffer);
+
+                    if (received == 0)
+                        throw new SocketException();
+
+                    string message = Encoding.ASCII.GetString(buffer, 0, received);
+                    Console.WriteLine("Server: " + message);
+                    Log.Information("Received from server: {0}", message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Disconnected from server. Trying to reconnect...");
+                Log.Warning("Lost connection: {0}", ex.Message);
+                connected = false;
+                Cleanup();
+                ConnectToServer();
+            }
+        }
+
+        static void Cleanup()
+        {
+            try
+            {
+                clientSocket?.Shutdown(SocketShutdown.Both);
+                clientSocket?.Close();
+            }
+            catch { }
+        }
     }
 }
