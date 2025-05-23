@@ -7,21 +7,17 @@ class UdpServer
 {
     static void Main()
     {
-        UdpClient server = new UdpClient(6000); // Server listens on port 6000
-        IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
-
-        Console.WriteLine("UDP Server started. Waiting for messages...");
-
-        while (true)
+        int listenPort = 11000;
+        using (UdpClient udpServer = new UdpClient(listenPort))
         {
-            byte[] receivedData = server.Receive(ref remoteEP);
-            string receivedMessage = Encoding.UTF8.GetString(receivedData);
-            Console.WriteLine("Client: " + receivedMessage);
-
-            Console.Write("You: ");
-            string reply = Console.ReadLine();
-            byte[] sendData = Encoding.UTF8.GetBytes(reply);
-            server.Send(sendData, sendData.Length, remoteEP);
+            Console.WriteLine($"Server is listening on port {listenPort}...");
+            IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            while (true)
+            {
+                byte[] receivedBytes = udpServer.Receive(ref remoteEndPoint);
+                string receivedData = Encoding.UTF8.GetString(receivedBytes);
+                Console.WriteLine($"Received from {remoteEndPoint}: {receivedData}");
+            }
         }
     }
 }
