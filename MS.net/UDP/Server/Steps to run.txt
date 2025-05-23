@@ -1,0 +1,37 @@
+ STEP 3: Run the Projects
+🔁 Run Both Projects:
+Right-click UdpServer → Set as Startup Project → Press F5 to run it.
+
+Then right-click UdpClientApp → Set as Startup Project → Press F5 to run it.
+
+You can also run both projects in separate Visual Studio instances or open the executable from the bin/Debug folder.
+
+🖥️ Expected Output
+✅ Server Console:
+arduino
+Copy
+Edit
+UDP Server started. Waiting for messages...
+Client: Hi Server!
+You: Hello Client!
+Client: How are you?
+You: I'm fine. You?
+✅ Client Console:
+vbnet
+Copy
+Edit
+UDP Client started. Type message to send.
+You: Hi Server!
+Server: Hello Client!
+You: How are you?
+Server: I'm fine. You?
+✅ No NuGet Packages Needed
+UDP is built-in to .NET via System.Net.Sockets, so no additional NuGet packages are required.
+
+Let me know if you want to:
+
+Use a GUI (WinForms/WPF)
+
+Convert to asynchronous
+
+Export chat to a file
