@@ -1,46 +1,66 @@
 using System;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using Serilog;
 
-class TcpServer
+namespace ServerApp
 {
-    static void Main()
+    class Program
     {
-        Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console()
-            .WriteTo.File("Logs/server_log.txt", rollingInterval: RollingInterval.Day)
-            .CreateLogger();
+        static Socket clientSocket;
 
-        Log.Information("Starting TCP Server...");
-
-        TcpListener server = new TcpListener(IPAddress.Any, 5000);
-        server.Start();
-        Log.Information("Server started. Waiting for connection...");
-
-        TcpClient client = server.AcceptTcpClient();
-        Log.Information("Client connected.");
-
-        NetworkStream stream = client.GetStream();
-        StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-        StreamWriter writer = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
-
-        while (true)
+        static void Main()
         {
-            string clientMessage = reader.ReadLine();
-            if (clientMessage == null) break;
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("serverlog.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
 
-            Log.Information("Client: {ClientMessage}", clientMessage);
-            Console.Write("You: ");
-            string reply = Console.ReadLine();
-            writer.WriteLine(reply);
-            Log.Information("Server: {Reply}", reply);
+            try
+            {
+                Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                serverSocket.Bind(new IPEndPoint(IPAddress.Any, 1234));
+                serverSocket.Listen(10);
+
+                Console.WriteLine("Server started. Waiting for client...");
+                clientSocket = serverSocket.Accept();
+                Console.WriteLine("Client connected.");
+
+                Thread receiveThread = new Thread(ReceiveMessages);
+                receiveThread.Start();
+
+                while (true)
+                {
+                    string msgToSend = Console.ReadLine();
+                    byte[] data = Encoding.ASCII.GetBytes(msgToSend);
+                    clientSocket.Send(data);
+                    Log.Information("Sent to client: {0}", msgToSend);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Server error: {0}", ex.Message);
+            }
         }
 
-        client.Close();
-        server.Stop();
-        Log.Information("Server stopped.");
+        static void ReceiveMessages()
+        {
+            try
+            {
+                while (true)
+                {
+                    byte[] buffer = new byte[1024];
+                    int received = clientSocket.Receive(buffer);
+                    string message = Encoding.ASCII.GetString(buffer, 0, received);
+                    Console.WriteLine("Client: " + message);
+                    Log.Information("Received from client: {0}", message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Receive error: {0}", ex.Message);
+            }
+        }
     }
 }
