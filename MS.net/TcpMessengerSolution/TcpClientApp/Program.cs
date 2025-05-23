@@ -7,21 +7,28 @@ class TcpClientApp
 {
     static void Main()
     {
-        TcpClient client = new TcpClient("127.0.0.1", 5000); // Connect to localhost
+        TcpClient client = new TcpClient("127.0.0.1", 5000);
         Console.WriteLine("Connected to TCP Server.");
 
         NetworkStream stream = client.GetStream();
         StreamReader reader = new StreamReader(stream, Encoding.UTF8);
         StreamWriter writer = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
 
-        while (true)
+        using (StreamWriter log = new StreamWriter("client_chatlog.txt", true))
         {
-            Console.Write("You: ");
-            string message = Console.ReadLine();
-            writer.WriteLine(message);
+            while (true)
+            {
+                Console.Write("You: ");
+                string message = Console.ReadLine();
+                writer.WriteLine(message);
+                log.WriteLine($"Client: {message}");
 
-            string serverMessage = reader.ReadLine();
-            Console.WriteLine("Server: " + serverMessage);
+                string serverMessage = reader.ReadLine();
+                Console.WriteLine("Server: " + serverMessage);
+                log.WriteLine($"Server: {serverMessage}");
+            }
         }
+
+        client.Close();
     }
 }
