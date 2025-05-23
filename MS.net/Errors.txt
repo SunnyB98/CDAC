@@ -25,3 +25,36 @@ Error	CS1069	The type name 'SqlConnection' could not be found in the namespace '
 
 Severity	Code	Description	Project	File	Line	Suppression State
 Error	CS1069	The type name 'SqlCommand' could not be found in the namespace 'System.Data.SqlClient'. This type has been forwarded to assembly 'System.Data.SqlClient, Version=0.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' Consider adding a reference to that assembly.	SqlDataByteExporter	C:\Users\tusharb\source\repos\SqlDataByteExporter\SqlDataByteExporter\DataAccess\SqlDataFetcher.cs	22	Active
+
+
+
+➤ Option B: Using NuGet UI
+Right-click on your project (SqlDataByteExporter) → Manage NuGet Packages.
+
+Go to Browse.
+
+Search: Microsoft.Data.SqlClient
+
+Select the latest stable version.
+
+Click Install and accept the license.
+
+✅ Step 2: Update Your Code
+In SqlDataFetcher.cs, change:
+
+csharp
+Copy
+Edit
+using System.Data.SqlClient;
+⬇️ To:
+
+csharp
+Copy
+Edit
+using Microsoft.Data.SqlClient;
+🔁 Step 3: Rebuild Project
+Build → Clean Solution
+
+Build → Rebuild Solution
+
+Let me know your .NET version if this still doesn't work — I’ll guide you specifically.
