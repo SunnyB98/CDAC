@@ -1,0 +1,45 @@
+Step 3: Run the Projects
+Set TcpServer as the Startup Project → Run it.
+
+Set TcpClientApp as the Startup Project → Run it.
+
+Make sure to run in separate terminals/instances.
+
+🖥️ Output Example
+✅ Server Console:
+arduino
+Copy
+Edit
+TCP Server started. Waiting for client...
+Client connected!
+Client: Hi Server!
+You: Hello Client
+Client: How are you?
+You: I'm good!
+✅ Client Console:
+vbnet
+Copy
+Edit
+Connected to TCP Server.
+You: Hi Server!
+Server: Hello Client
+You: How are you?
+Server: I'm good!
+Let me know if you want:
+
+Multiple client support (using threads)
+
+Store chat logs in a file
+
+GUI version using WinForms
+
+I'll guide you step-by-step.
+
+
+
+
+
+
+
+4o
+
