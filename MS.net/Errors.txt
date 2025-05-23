@@ -6,3 +6,12 @@ Error	CS0029	Cannot implicitly convert type 'int' to 'string'	SqlDataExporter	C:
 
 Severity	Code	Description	Project	File	Line	Suppression State
 Error	CS1061	'SqlDataFetcher' does not contain a definition for 'GetEmployees' and no accessible extension method 'GetEmployees' accepting a first argument of type 'SqlDataFetcher' could be found (are you missing a using directive or an assembly reference?)	SqlDataExporter	C:\Users\tusharb\source\repos\SqlDataExporter\SqlDataExporter\Program.cs	14	Active
+
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1069	The type name 'SqlConnection' could not be found in the namespace 'System.Data.SqlClient'. This type has been forwarded to assembly 'System.Data.SqlClient, Version=0.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' Consider adding a reference to that assembly.	SqlDataByteExporter	C:\Users\tusharb\source\repos\SqlDataByteExporter\SqlDataByteExporter\DataAccess\SqlDataFetcher.cs	19	Active
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS1069	The type name 'SqlCommand' could not be found in the namespace 'System.Data.SqlClient'. This type has been forwarded to assembly 'System.Data.SqlClient, Version=0.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' Consider adding a reference to that assembly.	SqlDataByteExporter	C:\Users\tusharb\source\repos\SqlDataByteExporter\SqlDataByteExporter\DataAccess\SqlDataFetcher.cs	22	Active
