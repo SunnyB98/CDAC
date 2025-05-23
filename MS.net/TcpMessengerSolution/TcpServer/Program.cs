@@ -19,15 +19,21 @@ class TcpServer
         StreamReader reader = new StreamReader(stream, Encoding.UTF8);
         StreamWriter writer = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
 
-        while (true)
+        using (StreamWriter log = new StreamWriter("server_chatlog.txt", true))
         {
-            string clientMessage = reader.ReadLine();
-            if (clientMessage == null) break;
-            Console.WriteLine("Client: " + clientMessage);
+            while (true)
+            {
+                string clientMessage = reader.ReadLine();
+                if (clientMessage == null) break;
 
-            Console.Write("You: ");
-            string reply = Console.ReadLine();
-            writer.WriteLine(reply);
+                Console.WriteLine("Client: " + clientMessage);
+                log.WriteLine($"Client: {clientMessage}");
+
+                Console.Write("You: ");
+                string reply = Console.ReadLine();
+                writer.WriteLine(reply);
+                log.WriteLine($"Server: {reply}");
+            }
         }
 
         client.Close();
