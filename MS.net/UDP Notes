@@ -1,0 +1,41 @@
+What is UDP? 
+ans -> UDP is a connectionless and lightweight transport layer protocol in the Internet Protocol Suite. It allows applications to send messages, called datagrams, without establishing a prior connection, 
+      making it suitable for scenarios where speed is crucial and occasional data loss is acceptable.
+
+Key Features : - 
+
+# Connectionless Communication: UDP does not establish a handshake before data transmission, reducing overhead and latency.
+powerwaf.com
+
+# No Guarantee of Delivery: There is no assurance that messages will arrive at their destination, nor are they guaranteed to arrive in order.
+  Dummies
+
+# Minimal Overhead: With a simple header structure, UDP adds minimal overhead, facilitating faster data transfer.
+
+# No Congestion Control: UDP lacks built-in mechanisms to manage network congestion, allowing for continuous data flow but increasing the risk of packet loss 
+  during high traffic.
+
+# Common Use Cases
+
+UDP is ideal for applications where speed is more critical than reliability:
+
+# Live Video and Audio Streaming: Ensures minimal delay, even if some data packets are lost.
+
+# Online Gaming: Provides fast transmission of game state updates.
+
+# Voice over IP (VoIP): Facilitates real-time voice communication with low latency.
+  Wikipedia
+
+# Domain Name System (DNS) Queries: Allows quick resolution of domain names to IP addresses.
+
+# Limitations :- 
+
+# Unreliable Transmission: No mechanisms for retransmission of lost packets.
+  powerwaf.com
+
+# Security Concerns: Susceptible to spoofing and amplification attacks due to lack of connection verification.
+
+# Not Suitable for Critical Data: Applications requiring guaranteed delivery should use protocols like TCP.
+
+
+
