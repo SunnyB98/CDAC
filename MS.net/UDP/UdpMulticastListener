@@ -1,0 +1,27 @@
+using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+
+class MulticastListener
+{
+    static void Main()
+    {
+        const int multicastPort = 5000;
+        const string multicastIP = "239.0.0.222";
+
+        using (UdpClient listener = new UdpClient(multicastPort))
+        {
+            listener.JoinMulticastGroup(IPAddress.Parse(multicastIP));
+            Console.WriteLine("Multicast Listener started. Waiting for messages...");
+
+            IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, multicastPort);
+            while (true)
+            {
+                byte[] data = listener.Receive(ref remoteEP);
+                string received = Encoding.UTF8.GetString(data);
+                Console.WriteLine($"Received from {remoteEP}: {received}");
+            }
+        }
+    }
+}
