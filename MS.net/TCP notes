@@ -1,0 +1,28 @@
+What is TCP? 
+
+# TCP is a connection-oriented protocol operating at the transport layer of the Internet Protocol Suite. It ensures reliable, ordered, and error-checked delivery of data between applications over a network.
+
+Key Features: -
+
+# Reliable Data Transfer: TCP guarantees the delivery of data packets in the correct order. If packets are lost or arrive out of sequence, TCP retransmits them to ensure accurate communication.
+
+# Three-Way Handshake: Before data transmission begins, TCP establishes a connection using a three-step process: the sender sends a SYN (synchronize) packet, the receiver responds with a SYN-ACK (synchronize-acknowledge), 
+  and the sender replies with an ACK (acknowledge). This process ensures both parties are ready for data exchange.
+
+# Flow Control: TCP uses a sliding window mechanism to manage the rate of data transmission, preventing the sender from overwhelming the receiver's buffer capacity.
+
+# Congestion Control: TCP implements algorithms like Slow Start, Congestion Avoidance, Fast Retransmit, and Fast Recovery to detect and mitigate network congestion, adjusting the data transmission rate accordingly.
+
+# Error Detection: Each TCP segment includes a checksum that allows the detection of corrupted data. If an error is detected, TCP requests retransmission of the affected data
+
+# Common Use Cases :- 
+
+TCP is widely used in applications where reliable data transmission is crucial, such as:
+
+# Web Browsing: HTTP and HTTPS protocols rely on TCP for delivering web pages.
+
+# Email Services: Protocols like SMTP, POP3, and IMAP use TCP to send and receive emails.
+
+# File Transfers: FTP (File Transfer Protocol) utilizes TCP to ensure complete and accurate file transfers.
+
+# Remote Access: Protocols like SSH (Secure Shell) and Telnet depend on TCP for secure and reliable remote connections.
