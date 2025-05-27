@@ -1,1 +1,6 @@
-
+id,first_name,last_name,email,gender
+1,Tushar,Bhongale,tushar@example.com,Male
+2,Aisha,Khan,aisha.khan@example.com,Female
+3,Ravi,Patel,ravi.patel@example.com,Male
+4,Neha,Sharma,neha.sharma@example.com,Female
+5,John,Doe,john.doe@example.com,Male
