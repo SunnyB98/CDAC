@@ -1,0 +1,5 @@
+"id,first_name,last_name,email,gender"
+"1,John,Doe,john.doe@example.com,Male"
+"2,Jane,Smith,jane.smith@example.com,Female"
+"3,David,Jones,david.jones@example.com,Male"
+"4,Lisa,Johnson,lisa.johnson@example.com,Female"
