@@ -27,7 +27,7 @@ namespace YouTubCRUD
             InitializeComponent();
             LoadGrid();
         }
-        SqlConnection con = new SqlConnection("Data Source=10.100.1.57;Initial Catalog=Sample1;User Id=sa;Password=Sa@123;TrustServerCertificate=True;");
+        SqlConnection con = new SqlConnection("");
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
