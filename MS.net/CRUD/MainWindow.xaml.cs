@@ -1,25 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace YouTubCRUD
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -27,17 +13,10 @@ namespace YouTubCRUD
             InitializeComponent();
             LoadGrid();
         }
-        SqlConnection con = new SqlConnection("");
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        // ✅ Put your actual connection string here
+        SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=YourDatabaseName;Integrated Security=True");
 
-        }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
         public void clearData()
         {
             name_txt.Clear();
@@ -46,54 +25,50 @@ namespace YouTubCRUD
             city_txt.Clear();
             search_txt.Clear();
         }
+
         public void LoadGrid()
         {
-            SqlCommand cmd = new SqlCommand("select * from firsttable", con);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM FirstTable", con);
             DataTable dt = new DataTable();
             con.Open();
             SqlDataReader sdr = cmd.ExecuteReader();
             dt.Load(sdr);
             con.Close();
-            datagrid.ItemsSource= dt.DefaultView;
-            search_txt.Clear();
+            datagrid.ItemsSource = dt.DefaultView;
         }
 
-        private void ClearDataBtn_Click(object sender, RoutedEventArgs e)
-        {
-            clearData();
-        }
         public bool isValid()
         {
-            if(name_txt.Text == string.Empty)
+            if (name_txt.Text == "")
             {
-                MessageBox.Show("Name is Required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Name is required");
                 return false;
             }
-            if (age_txt.Text == string.Empty)
+            if (age_txt.Text == "")
             {
-                MessageBox.Show("Age is Required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Age is required");
                 return false;
             }
-            if (gender_txt.Text == string.Empty)
+            if (gender_txt.Text == "")
             {
-                MessageBox.Show("Gender is Required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Gender is required");
                 return false;
             }
-            if (city_txt.Text == string.Empty)
+            if (city_txt.Text == "")
             {
-                MessageBox.Show("City is Required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("City is required");
                 return false;
             }
             return true;
         }
+
         private void InsertBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (isValid())
                 {
-                    SqlCommand cmd = new SqlCommand("insert into firsttable Values (@Name, @Age, @Gender, @City", con);
-                    cmd.CommandType = CommandType.Text;
+                    SqlCommand cmd = new SqlCommand("INSERT INTO FirstTable (Name, Age, Gender, City) VALUES (@Name, @Age, @Gender, @City)", con);
                     cmd.Parameters.AddWithValue("@Name", name_txt.Text);
                     cmd.Parameters.AddWithValue("@Age", age_txt.Text);
                     cmd.Parameters.AddWithValue("@Gender", gender_txt.Text);
@@ -102,11 +77,35 @@ namespace YouTubCRUD
                     cmd.ExecuteNonQuery();
                     con.Close();
                     LoadGrid();
-                    MessageBox.Show("Successfully registered", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Inserted successfully");
                     clearData();
-
                 }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
+        private void UpdateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (isValid())
+                {
+                    SqlCommand cmd = new SqlCommand("UPDATE FirstTable SET Name=@Name, Age=@Age, Gender=@Gender, City=@City WHERE ID=@ID", con);
+                    cmd.Parameters.AddWithValue("@Name", name_txt.Text);
+                    cmd.Parameters.AddWithValue("@Age", age_txt.Text);
+                    cmd.Parameters.AddWithValue("@Gender", gender_txt.Text);
+                    cmd.Parameters.AddWithValue("@City", city_txt.Text);
+                    cmd.Parameters.AddWithValue("@ID", search_txt.Text);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    LoadGrid();
+                    MessageBox.Show("Updated successfully");
+                    clearData();
+                }
             }
             catch (SqlException ex)
             {
@@ -116,28 +115,26 @@ namespace YouTubCRUD
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            con.Open();
-            SqlCommand cmd =  new SqlCommand("delete from firsttable where ID = "+search_txt.Text+" ", con);
             try
             {
+                SqlCommand cmd = new SqlCommand("DELETE FROM FirstTable WHERE ID = @ID", con);
+                cmd.Parameters.AddWithValue("@ID", search_txt.Text);
+                con.Open();
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("Record has been deleted ", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
                 con.Close();
-                clearData();
                 LoadGrid();
-                con.Close();
+                MessageBox.Show("Deleted successfully");
+                clearData();
             }
-            catch (SqlException ex) 
+            catch (SqlException ex)
             {
-                MessageBox.Show("Not Deleted"+ex.Message);    
+                MessageBox.Show(ex.Message);
             }
-            finally { con.Close(); clearData(); }
         }
 
-        private void UpdateBtn_Click(object sender, RoutedEventArgs e)
+        private void ClearDataBtn_Click(object sender, RoutedEventArgs e)
         {
-            con.Open
-
+            clearData();
         }
     }
 }
