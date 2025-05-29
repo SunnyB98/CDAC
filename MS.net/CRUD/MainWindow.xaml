@@ -32,11 +32,13 @@
     </Grid>
 </Window>
 
+
 // MainWindow.xaml.cs
 using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace YouTubCRUD
 {
@@ -68,43 +70,27 @@ namespace YouTubCRUD
             dt.Load(sdr);
             con.Close();
             datagrid.ItemsSource = dt.DefaultView;
-            search_txt.Clear();
-        }
-
-        public bool isValid()
-        {
-            if (name_txt.Text == string.Empty || age_txt.Text == string.Empty ||
-                gender_txt.Text == string.Empty || city_txt.Text == string.Empty)
-            {
-                MessageBox.Show("All fields are required", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-            return true;
         }
 
         private void InsertBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (isValid())
-                {
-                    SqlCommand cmd = new SqlCommand("insert into firsttable (Name, Age, Gender, City) Values (@Name, @Age, @Gender, @City)", con);
-                    cmd.Parameters.AddWithValue("@Name", name_txt.Text);
-                    cmd.Parameters.AddWithValue("@Age", age_txt.Text);
-                    cmd.Parameters.AddWithValue("@Gender", gender_txt.Text);
-                    cmd.Parameters.AddWithValue("@City", city_txt.Text);
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                    LoadGrid();
-                    clearData();
-                    MessageBox.Show("Record Inserted", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
+                SqlCommand cmd = new SqlCommand("insert into firsttable (Name, Age, Gender, City) values (@Name, @Age, @Gender, @City)", con);
+                cmd.Parameters.AddWithValue("@Name", name_txt.Text);
+                cmd.Parameters.AddWithValue("@Age", age_txt.Text);
+                cmd.Parameters.AddWithValue("@Gender", gender_txt.Text);
+                cmd.Parameters.AddWithValue("@City", city_txt.Text);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+                LoadGrid();
+                MessageBox.Show("Successfully inserted", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+                clearData();
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
-                con.Close();
             }
         }
 
@@ -112,19 +98,18 @@ namespace YouTubCRUD
         {
             try
             {
-                con.Open();
                 SqlCommand cmd = new SqlCommand("delete from firsttable where ID = @ID", con);
                 cmd.Parameters.AddWithValue("@ID", search_txt.Text);
+                con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
                 LoadGrid();
+                MessageBox.Show("Record deleted", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearData();
-                MessageBox.Show("Record Deleted", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                MessageBox.Show("Delete Failed: " + ex.Message);
-                con.Close();
+                MessageBox.Show("Not Deleted: " + ex.Message);
             }
         }
 
@@ -132,23 +117,22 @@ namespace YouTubCRUD
         {
             try
             {
-                con.Open();
                 SqlCommand cmd = new SqlCommand("update firsttable set Name=@Name, Age=@Age, Gender=@Gender, City=@City where ID=@ID", con);
                 cmd.Parameters.AddWithValue("@ID", search_txt.Text);
                 cmd.Parameters.AddWithValue("@Name", name_txt.Text);
                 cmd.Parameters.AddWithValue("@Age", age_txt.Text);
                 cmd.Parameters.AddWithValue("@Gender", gender_txt.Text);
                 cmd.Parameters.AddWithValue("@City", city_txt.Text);
+                con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
                 LoadGrid();
+                MessageBox.Show("Record updated", "Updated", MessageBoxButton.OK, MessageBoxImage.Information);
                 clearData();
-                MessageBox.Show("Record Updated", "Updated", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                MessageBox.Show("Update Failed: " + ex.Message);
-                con.Close();
+                MessageBox.Show("Not Updated: " + ex.Message);
             }
         }
 
